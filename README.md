@@ -16,6 +16,7 @@ Dzięki wykorzystaniu technologii eBPF, eliminuje konieczność używania proxy 
 * Cilium agent;
 * Cilium CLI;
 * Cilium CNI plugin.
+
 Cilium operator zapewnia, że Cilium jest poprawnie skonfigurowany na każdym nodzie klastra. Cilium agent, daemon na każdym nodzie, zarządza programami eBPF, służącymi do kontroli uprawnień sieciowych kontenerów. Cilium CLI pozwala na konfigurację Cilium z terminala. CNI plugin integruje Cilium z kubernetesem, dzięki czemu klaster może wykorzystywać implementowane przez Cilium rozwiązania. Cilium pozwala na zarządzanie pakietami poprzez etykietowanie.
 
 ## eBPF
