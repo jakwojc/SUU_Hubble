@@ -38,3 +38,10 @@ Zestaw narzędzi do observability do zbierania danych takich jak ślady, metryki
 
 W celu zrealizowania projektu użyjemy demo aplikacji "Online Boutique" udostępnionej przez Google Cloud Platfrom. "Online Boutiqe" to sklep internetowy oparty na mikroserwisach, który umożliwia przeglądanie katalogu, dodawanie przedmiotów do koszyka oraz kupowanie ich. Aby aplikacja była kompatybilna z Cilium, dodamy do deploymentu tzw. taint, który umożliwi Cilium zarządzanie podami.
 Następnie użyjemy Hubble i OTel, aby pozyskać dane telemetryczne tj. profile, ślady, metryki. OPCJONALNIE - Pokażemy również, że Cilium pozwala na znacznie efektywniejsze skalowanie klastra w porównaniu do implementacji na istio (które używa iptables a Cilium eBPF). OPCJONALNIE2 - Pokażemy, że Cilium pozwala na zaimplementowanie zero-trust security ([wso2 case study](https://www.cncf.io/case-studies/wso2/)).
+
+## Wykorzystane techonologie
+
+* Cilium - do zapewnienia sieci, polityki bezpieczeństwa i load balancingu
+* Hubble - do monitorowania i obserwacji ruchu sieciowego 
+* OTel - o wyciąganięcia metryk, trace'ów i log'ów 
+* Grafana - do wziualizacji
