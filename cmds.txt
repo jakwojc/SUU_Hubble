@@ -1,0 +1,10 @@
+cilium install
+git clone https://github.com/GoogleCloudPlatform/microservices-demo.git
+cilium hubble enable
+cilium hubble port-forward &
+hubble status
+cilium hubble enable --ui
+cilium hubble ui
+hubble observe --namespace ...
+kubectl taint nodes ... node.cilium.io/agent=true:NoSchedule
+
