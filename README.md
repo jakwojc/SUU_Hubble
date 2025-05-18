@@ -40,3 +40,10 @@ W celu zrealizowania projektu użyjemy demo aplikacji "Online Boutique" udostęp
 Pody klastra będą zarządzane przez Cilium. Aby było to możliwe, dodamy do manifestu klastra (plik .yaml) tzw. taint, czyli odpowiednią etykietę, umożliwiającą Cilium połączenie się z podem. 
 Następnie za pomocą Hubble oraz OpenTelemetry będziemy obserwować ruch na klastrze i zbierać dane. W ramach projektu będziemy zbierać profile - zużycie CPU, pamięci, ślady - śledzenie ścieżki żądań oraz metryki - liczba żądań na sekundę, opóźnienie odpowiedzi. Otrzymane dane zwizualizujemy za pomocą Grafany.
 Na kolejnym etapie projektu uruchomimy taki sam sklep internetowy, ale korzystając z istio. Tutaj do wizualizacji danych będziemy używać Prometheus oraz Grafany. Cilium, które korzysta z eBPF powinno skalować się lepiej niż Istio, korzystające z iptables. Aby to sprawdzić porównamy opóźnienie odpowiedzie oraz użycie CPU oraz pamięci między implementacjami, przy takim samym ruchu.
+
+## Wykorzystane techonologie
+
+* Cilium - do zapewnienia sieci, polityki bezpieczeństwa i load balancingu
+* Hubble - do monitorowania i obserwacji ruchu sieciowego 
+* OTel - o wyciąganięcia metryk, trace'ów i log'ów 
+* Grafana - do wziualizacji
