@@ -45,3 +45,55 @@ Następnie użyjemy Hubble i OTel, aby pozyskać dane telemetryczne tj. profile,
 * Hubble - do monitorowania i obserwacji ruchu sieciowego 
 * OTel - o wyciąganięcia metryk, trace'ów i log'ów 
 * Grafana - do wziualizacji
+
+
+## Jak uruchomić (na minikube)
+```bash
+minikube start --driver=docker --cpus=2 --memory=4096 -p suu
+```
+```bash
+helm repo add cilium https://helm.cilium.io/
+```
+```bash
+helm install cilium cilium/cilium --version 1.17.4 \
+   --namespace kube-system \
+   --set prometheus.enabled=true \
+   --set operator.prometheus.enabled=true \
+   --set hubble.enabled=true \
+   --set hubble.metrics.enableOpenMetrics=true \
+   --set hubble.metrics.enabled="{dns,drop,tcp,flow,port-distribution,icmp,httpV2:exemplars=true;labelsContext=source_ip\,source_namespace\,source_workload\,destination_ip\,destination_namespace\,destination_workload\,traffic_direction}"
+```
+```bash
+cilium hubble enable --ui
+```
+```bash
+cilium hubble port-forward &
+```
+```bash
+cilium status
+```
+
+powinno pokazac:
+![img/cilium_status.png](img/cilium_status.png)
+```bash
+hubble observe --namespace default
+```
+![img/hubble_observe.png](img/hubble_observe.png)
+
+```bash
+cilium hubble ui
+```
+![img/hubble_ui.png](img/hubble_ui.png)
+
+
+wejście na Prometheusa: 
+```bash
+kubectl -n cilium-monitoring port-forward service/prometheus --address 0.0.0.0 --address :: 9090:9090
+```
+![img/prometheus_ui.png](img/prometheus_ui.png)
+
+wejście na Grafane: 
+```bash
+kubectl -n cilium-monitoring port-forward service/grafana --address 0.0.0.0 --address :: 3000:3000
+```
+![img/grafana_ui.png](img/grafana_ui.png)
