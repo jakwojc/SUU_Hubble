@@ -6,6 +6,9 @@
 1. [Wprowadzenie](#wprowadzenie)
 2. [Teoria](#teoria)
 3. [Koncept Demo](#koncept-demo)
+4. [Wykorzystane Technologie](#wykorzystane-techonologie)
+5. [Konfiguracja środowiska](#konfiguracja-środowiska)
+6. 
 
 ## Wprowadzenie
 
@@ -48,8 +51,9 @@ Na kolejnym etapie projektu uruchomimy taki sam sklep internetowy, ale korzystaj
 * OTel - o wyciąganięcia metryk, trace'ów i log'ów 
 * Grafana - do wziualizacji
 
+## Konfiguracja środowiska
 
-## Jak uruchomić (na minikube)
+### Jak uruchomić Cilium i Hubble (na minikube)
 ```bash
 minikube start --driver=docker --cpus=2 --memory=4096 -p suu
 ```
@@ -99,3 +103,12 @@ wejście na Grafane:
 kubectl -n cilium-monitoring port-forward service/grafana --address 0.0.0.0 --address :: 3000:3000
 ```
 ![img/grafana_ui.png](img/grafana_ui.png)
+
+### Uruchamianie na Istio
+
+Demo na istio zostało uruchomione według [instrukcji service mesh](https://istioworkshop.github.io/).
+
+## Porównanie z iptables
+
+### Profile
+![img/istio-profiles.png](img/istio-profiles.png)
