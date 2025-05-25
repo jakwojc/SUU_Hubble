@@ -99,3 +99,84 @@ wejście na Grafane:
 kubectl -n cilium-monitoring port-forward service/grafana --address 0.0.0.0 --address :: 3000:3000
 ```
 ![img/grafana_ui.png](img/grafana_ui.png)
+
+
+zainstaluj cert-manager 
+```bash
+kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.17.2/cert-manager.yaml
+```
+
+zainstaluj opentelemtry operator
+```bash
+kubectl apply -f https://github.com/open-telemetry/opentelemetry-operator/releases/latest/download/opentelemetry-operator.yaml &&
+kubectl apply -f otecol.yaml
+```
+
+w simplest-collector dodaj exportowanie metryk
+```bash
+kubectl edit opentelemetrycollector simplest
+```
+
+w nastepujacy sposob:
+```bash
+spec:
+  config:
+    exporters:
+      debug: {}
+    processors:
+      batch:
+        send_batch_size: 10000
+        timeout: 10s
+      memory_limiter:
+        check_interval: 1s
+        limit_percentage: 75
+        spike_limit_percentage: 15
+    receivers:
+      hostmetrics:
+        scrapers:
+          cpu: {}
+      otlp:
+        protocols:
+          grpc:
+            endpoint: 0.0.0.0:4317
+          http:
+            endpoint: 0.0.0.0:4318
+    service:
+      pipelines:
+        metrics:
+          exporters:
+          - debug
+          processors:
+          - batch
+          receivers:
+          - hostmetrics
+        traces:
+          exporters:
+          - debug
+          processors:
+          - memory_limiter
+          - batch
+          receivers:
+          - otlp
+      telemetry:
+        metrics:
+          readers:
+          - pull:
+              exporter:
+                prometheus:
+                  host: 0.0.0.0
+                  port: 8888
+```
+
+dodaj visibility na L7
+```bash
+kubectl apply -f ciliumnetworkpolicy.yaml
+```
+
+## Grafana:
+
+Opentelemtry CPU + memory:
+![img/grafana-opentel.png](img/grafana-opentel.png)
+
+Hubble requests latency:
+![img/grafana-requests.png](img/grafana-requests.png)
