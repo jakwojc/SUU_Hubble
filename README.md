@@ -111,4 +111,21 @@ Demo na istio zostało uruchomione według [instrukcji service mesh](https://ist
 ## Porównanie z iptables
 
 ### Profile
-![img/istio-profiles.png](img/istio-profiles.png)
+
+#### CPU
+
+![img/istio-CPU.png](img/istio-CPU.png)
+
+#### Pamięć
+
+![img/istio-mem.png](img/istio-mem.png)
+
+### Metryki
+
+#### Ruch
+
+![img/istio-ops_s.png](img/istio-ops_s.png)
+
+#### Opóźnienie
+
+![img/istio-latency.png](img/istio-latency.png)
