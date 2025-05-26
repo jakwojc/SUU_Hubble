@@ -1,0 +1,20 @@
+apiVersion: "cilium.io/v2"
+kind: CiliumNetworkPolicy
+metadata:
+  name: "http-l7-policy"
+spec:
+  endpointSelector:
+    matchLabels:
+      app: frontend
+  ingress:
+  - fromEndpoints:
+    - matchLabels:
+        app: loadgenerator
+    toPorts:
+    - ports:
+      - port: "80"
+        protocol: TCP
+      - port: "8080"
+        protocol: TCP
+      rules:
+        http: [{}]
