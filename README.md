@@ -8,7 +8,7 @@
 3. [Koncept Demo](#koncept-demo)
 4. [Wykorzystane Technologie](#wykorzystane-techonologie)
 5. [Konfiguracja środowiska](#konfiguracja-środowiska)
-6. 
+6. [Podsumowanie](#podsumowanie)
 
 ## Wprowadzenie
 
@@ -209,3 +209,17 @@ Demo na istio zostało uruchomione według [instrukcji service mesh](https://ist
 #### Opóźnienie
 
 ![img/istio-latency.png](img/istio-latency.png)
+
+## Podsumowanie
+
+W ramach projektu wykorzystaliśmy Cilium do uruchomienia przykładowej mikroserwisowej aplikacji 'Online boutique'. Zaimplementowanie Cilium na klastrze było proste - wystarczyło dodać odpowiednią etykietę w manifeście aplikacji oraz zainstalować sam program. Kolejnym celem projektu było wykorzystanie Hubble oraz Open Telemetry do observability na klastrze. Za pomocą Hubble udało nam się śledzić ruch żądań HTTP na klastrze (L7) oraz zmierzyć czas odpowiedzi na żądania. Hubble umożliwił również śledzenie ilości operacji wykonywanych na klastrze na sekundę. Wykorzystując Open Telemetry Collector zebraliśmy profile, takie jak wykorzystanie CPU oraz pamięci przez aplikację.
+
+Architektura Cilium + Hubble różni się od standardowej implementacji wykorzystującej iptables. W przypadku kalstra zarządzanego przez Cilium wykorzystywana jest technologia eBPF. Pozwala to na znacznie wydajniejsze skalowania klastra niż w przypadku iptables. Ostatnim elementem projektu jest porównanie aplikacji 'Online Boutique' działającej na architekturze Cilium, z tą samą aplikacją zarządzaną przez Istio. Kluczowym faktem uzasadniającym takie porównanie jest to, że Istio wykorzystuje iptables, a Cilium - eBPF.
+
+Z otrzymanych wyników niezaprzeczalnie widać przewagę Cilium nad Istio. Zwiększając ruch na klastrze, od 10 do 100 użytkowników, w przypadku Istio, wykorzystanie CPU rośnie znacząco - wręcz liniowo razem z liczbą użytkowników. W przypadku Cilium nie zauważono znaczącego wzrostu wykorzystania CPU. Następnie porównano czasy odpowiedzi na żądanie - przy ruchu generowanym przez 100 symulowanych użytkowników. Na Istio czas ten wyniósł około 1.3s w najgorszym wypadku, natomiast dla Cilium czas ten wyniósł nieco poniżej jednej sekundy. Wynika z tego, że Cilium pozwala na wydajniejsze skalowanie klastra niż Istio.
+
+## Referencje
+1. [Dokumentacja Cilium + Hubble](https://docs.cilium.io/en/stable/overview/intro/)
+2. [Open Telemetry Operator for Kubernetes](https://opentelemetry.io/docs/platforms/kubernetes/operator/)
+3. [Hubble cheat-sheet](https://cilium.isovalent.com/hubfs/marketing%20briefs/Isovalent%20-%20Cilium%20Hubble%20Cheat%20Sheet.pdf)
+4. [Dashboard OTel Collector w Grafanie](https://grafana.com/grafana/dashboards/15983-opentelemetry-collector/)
